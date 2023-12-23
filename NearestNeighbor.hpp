@@ -17,6 +17,17 @@ void read(std::vector<Node> & nodes, std::string filename){
             s >> data[0];
             s >> data[1];
             s >> data[2];
+        // if(isdigit(line[0])){
+        //     int spaceIndex = line.find(" ");
+            
+        //     for(int i=0;i<3;i++){
+        //         if(spaceIndex == -1)spaceIndex=line.length()-1;
+
+        //         data[i] = stod(line.substr(0,spaceIndex));
+
+        //         line = line.substr(spaceIndex+1);
+        //         spaceIndex = line.find(" ");
+        //     }
 
             Node node(data);
             nodes.push_back(node);
