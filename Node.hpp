@@ -5,22 +5,30 @@
 class Node{
     private:
         int ID_;
-        int x_;
-        int y_;
+        double x_;
+        double y_;
+        Node *head_;
+        Node *tail_;
     public:
         //Constructors
         Node();
-        Node(int a, int b, int c);
+        Node(double data[3]);
+        Node(int a, double b, double c);
 
         //Accessor
         int getID();
-        int getX();
-        int getY();
+        double getX();
+        double getY();
+        Node *getHead();
+        Node *getTail();
+        std::string print();
 
         //Mutator
         void setID(int n);
-        void setX(int n);
-        void setY(int n);
+        void setX(double n);
+        void setY(double n);
+        void setHead(Node &n);
+        void setTail(Node &n);
 
         double getDistance(Node node);
 };
