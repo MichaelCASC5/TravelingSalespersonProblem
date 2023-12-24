@@ -1,44 +1,49 @@
+/**
+    * MICHAEL CALLE - 335 ASSIGNMENT III
+    * NEAREST NEIGHBOR ALGORITHM
+*/
 #ifndef NEARESTNEIGHBOR_HPP
 #define NEARESTNEIGHBOR_HPP
 #include "Node.hpp"
+#include <iostream>
 #include <chrono>
 #include <cmath>
 #include <fstream>
 #include <sstream>
+#include <vector>
 
-void read(std::vector<Node> & nodes, std::string filename){
+/**
+    * Traverses the cities using the nearest neighbor algorithm
+    * 
+    * First, the data from the files are read into a vector. So long as each line begins with a digit
+    * the information on that line gets fed into a Node object.
+    * These nodes are put together in a vector, that represents the file of data all read in.
+    * The following algorithmic process in then timed.
+    * Traverse the list and for each node, calculate out of the unvisited nodes which is closest.
+    * When that node is discovered std::swap it into the position one ahead of the current node.
+    * Naturally, as the vector is traversed the nodes fall into their organized positions.
+    *
+    * @param filename The file to be read.
+*/
+void nearestNeighbor (std::string filename){
+    //Read data into nodes vector
+    std::vector<Node> nodes;
     std::ifstream file; file.open(filename);
 
-    double data[3];
+    int readID;
+    double readX, readY;
     std::string line;
     while(getline(file, line)){
         if(isdigit(line[0])){
             std::stringstream s(line);
-            s >> data[0];
-            s >> data[1];
-            s >> data[2];
-        // if(isdigit(line[0])){
-        //     int spaceIndex = line.find(" ");
-            
-        //     for(int i=0;i<3;i++){
-        //         if(spaceIndex == -1)spaceIndex=line.length()-1;
+            s >> readID;
+            s >> readX;
+            s >> readY;
 
-        //         data[i] = stod(line.substr(0,spaceIndex));
-
-        //         line = line.substr(spaceIndex+1);
-        //         spaceIndex = line.find(" ");
-        //     }
-
-            Node node(data);
+            Node node(readID, readX, readY);
             nodes.push_back(node);
         }
     }
-}
-
-void nearestNeighbor (std::string filename){
-    //Read data into nodes vector
-    std::vector<Node> nodes;
-    read(nodes,filename);
 
     //Starts the timer
     auto start = std::chrono::steady_clock::now();
@@ -47,13 +52,12 @@ void nearestNeighbor (std::string filename){
     Node * originalNode = &nodes[0];
 
     //Initializing ID concatanation
-    std::string idList = "1 ";
+    std::string idList = std::to_string(nodes[0].getID()) + " ";;
 
     //Sort algorithm
     int save = 0;
     double totalDist = 0;
     for(int i=0;i<nodes.size()-1;i++){
-        // if(i%100==0)std::cout << i << std::endl;
         double dist = pow(2,32);
 
         for(int j=i+1;j<nodes.size();j++){
@@ -78,6 +82,7 @@ void nearestNeighbor (std::string filename){
     auto number = std::chrono::duration_cast<std::chrono::milliseconds> (finish - start);
     double duration = number.count();
 
+    //Print the final information
     std::cout << idList << "\nTotal Distance: " << totalDist << "\nTime in ms: " << duration << std::endl;
 }
 

@@ -6,7 +6,7 @@
 #include "GreedyTSP.hpp"
 
 int main(){
-    nearestNeighbor("ar9152.tsp");
+    nearestNeighbor("dj38.tsp");
     
     return 0;
 }
